@@ -146,6 +146,66 @@ namespace Algorithm
             }
         }
 
+        // 다익스트라 알고리즘
+        // 특정한 노드에서 출발하여 다른 노드까지 가는 각각의 최단 경로를 구하는 알고리즘
+        // 1. 방문하지 않는 노드 중에서 가까운 노드를 선택한 후,
+        // 2. 선택한 노드를 거쳐서 더 짧아지는 경로가 있는 경우 대체
+
+        const int INF = 99999;
+        public static void Dijkstrr(int[,] graph, int start, out bool[] visited, out int[] parents, out int[] cost)
+        {
+            int size = graph.GetLength(0);
+            visited = new bool[size];
+            parents = new int[size];
+            cost = new int[size];
+
+            for (int i = 0; i < size; i++)
+            {
+                visited[i] = false;
+                parents[i] = -1;
+                cost[i] = INF;
+            }
+            cost[start] = 0;
+
+            for (int i = 0; i < size; i++)
+            {
+                // 1. 방문하지 않은 정점 중 가장 가따운 정점 선택
+                int minIndex = -1;
+                int minCost = INF;
+                for (int j = 0; j < size; j++)
+                {
+                    if (visited[i] == false && cost[j] < minCost) // 방문한 적 없으면 가장가까운 정점
+                    {
+                        minIndex = j;
+                        minCost = cost[j];
+
+                    }
+                }
+                if (minIndex < 0)
+                    break;
+
+                visited[minIndex] = true;
+
+                    // 2. 직접 연결된 거리보다 거쳐서 더 짧아지면 대체
+                    for (int j = 0; j < size; j++)
+                    {
+                        // cost[j] : 목적짂자ㅣ 직접 연결된 거리 (AB)
+                        // cost[minIndex] : 중간점까지의 거리 (AC)
+                        // graph[minIndex, j] : 중간점부터 목적지까지 거리 (CB)
+                        if (cost[j] > cost[minIndex] + graph[minIndex, j])
+                        {
+                            cost[j] = cost[minIndex] + graph[minIndex, j];
+                            parents[j] = minIndex;
+                        }
+                    }
+                }
+
+
+            }
+
+        
+
+
         static void Main(string[] args)
         {
             int[] array = { 0, 2, 4, 6, 8, 9, 7, 5, 3, 1 };
