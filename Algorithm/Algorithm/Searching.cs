@@ -65,6 +65,7 @@ namespace Algorithm
         // 그래프의 분기를 만났을 때 모든 분기들을 탐색한 뒤,
         // 다음 깊이의 분기들을 탐색
         // 큐를 통해 탐색
+        // 장점 : 최단 경로를 보장
 
         public static void BFS(bool[,] graph, int staar, out bool[] visited, out int[] parents)
         {
@@ -104,6 +105,7 @@ namespace Algorithm
         // 그래프의 분기를 만났을 때 최대한 깊이 내려간 뒤,
         // 분기의 탐색을 마쳤을 때 다음 분기를 탐색
         // 스택을 통해 구현
+        // 단점 : 최단 경로를 보장 하지 않는다
 
         public static void DFS(bool[,] graph, int start, out bool[] visited, out int[] parents)
         {
