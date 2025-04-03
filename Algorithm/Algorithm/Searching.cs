@@ -100,11 +100,42 @@ namespace Algorithm
             }
         }
 
- 
+        // <깊이 우선 탐색 (Depth-First Search)>
+        // 그래프의 분기를 만났을 때 최대한 깊이 내려간 뒤,
+        // 분기의 탐색을 마쳤을 때 다음 분기를 탐색
+        // 스택을 통해 구현
 
+        public static void DFS(bool[,] graph, int start, out bool[] visited, out int[] parents)
+        {
+            int size = graph.GetLength(0); // 정점의 갯수
+            visited = new bool[size];
+            parents = new int[size];
 
+            for (int i = 0; i < size; i++)
+            {
+                visited[i] = false;
+                parents[i] = -1;
+            }
 
+            SearchNode(graph, start, visited, parents); // 함수 호출 스택 스는 방법
+        }
 
+        public static void SearchNode(bool[,] graph, int vertex, bool[] visited, int[] parents)
+        {
+            int size = graph.GetLength(0);
+            visited[vertex] = true;
+
+            for (int i = 0; i < size; i++)
+            {
+                if (graph[vertex, i] == true && // 연결이 되어 있는 정점
+                    visited[i] == false) // 방문한 적 없는 정점
+                {
+                    parents[i] = vertex;
+                    SearchNode(graph, i, visited, parents);
+                }
+
+            }
+        }
 
         static void Main(string[] args)
         {
