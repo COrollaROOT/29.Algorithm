@@ -61,6 +61,50 @@ namespace Algorithm
             return -1;
         }
 
+        // <너비 우선 탐색 (Breadth-First Search)>
+        // 그래프의 분기를 만났을 때 모든 분기들을 탐색한 뒤,
+        // 다음 깊이의 분기들을 탐색
+        // 큐를 통해 탐색
+
+        public static void BFS(bool[,] graph, int staar, out bool[] visited, out int[] parents)
+        {
+            int size = graph.GetLength(0);
+            visited = new bool[size];
+            parents = new int[size];
+
+            for (int i = 0; i < size; i++)
+            {
+                visited[i] = false;
+                parents[i] = -1;
+            }
+
+            Queue<int> queue = new Queue<int>();
+            queue.Enqueue(staar);
+            visited[staar] = true;
+
+            while (queue.Count > 0)
+            {
+                // 큐에서 다음으로 탐색할 정점을 확인한다
+                int next = queue.Dequeue();
+                // 다음으로 탐색할 정점을 기준으로 탐색할 수 있는 정점들을 큐에 담는다
+                for (int vertex = 0; vertex < size; vertex++) // 정점들을 반복하면서
+                {
+                    if (graph[next, vertex] == true && // 연결이 되어 있는 정점 // 방문한 적 없는 정점
+                        visited[vertex] == false) // 탐색할 수 있는 점점인 경우 // 연결되어 있으면서 && 이미 찾은 정점이 아닐때
+                    {
+                        queue.Enqueue(vertex); // 큐에 탐색할 수 있는 정점을 추가한다
+                        visited[vertex] = true; // 탐색할 수 있는 정점을 방문 표시
+                        parents[vertex] = next; // 탐색할 수 있는 정점을 이전 정점을 표시한다
+                    }
+                }
+            }
+        }
+
+ 
+
+
+
+
 
         static void Main(string[] args)
         {
