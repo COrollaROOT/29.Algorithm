@@ -66,6 +66,9 @@ namespace Algorithm
         // 다음 깊이의 분기들을 탐색
         // 큐를 통해 탐색
         // 장점 : 최단 경로를 보장
+        // 단점 : 지금 탐색상황에서 필요하지 않은 정점데이터도 큐에 보관할 필요가 있다
+
+        // 일반적으로 그래프에 사용 선호
 
         public static void BFS(bool[,] graph, int staar, out bool[] visited, out int[] parents)
         {
@@ -105,7 +108,11 @@ namespace Algorithm
         // 그래프의 분기를 만났을 때 최대한 깊이 내려간 뒤,
         // 분기의 탐색을 마쳤을 때 다음 분기를 탐색
         // 스택을 통해 구현
-        // 단점 : 최단 경로를 보장 하지 않는다
+        // 장점 : 지금 탐색상황에서 필요한 정점데이터만 보관가능하고 탐색이 끝나면 버려도 무관하다.
+        // 단점 : 최단 경로를 보장 하지 않는다.
+
+        // 일반적으로 트리에 사용 선호
+
 
         public static void DFS(bool[,] graph, int start, out bool[] visited, out int[] parents)
         {
@@ -148,6 +155,40 @@ namespace Algorithm
             int[] ints = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
             int binIndex = BinarySearch(ints, 3);
             Console.WriteLine("탐색 결과 : {0}", binIndex);
+
+
+            bool[,] graph = new bool[8, 8];
+            graph[0, 3] = true;
+            graph[1, 2] = true;
+            graph[1, 6] = true;
+            graph[2, 1] = true;
+            graph[2, 4] = true;
+            graph[2, 5] = true;
+            graph[3, 0] = true;
+            graph[3, 5] = true;
+            graph[3, 7] = true;
+            graph[4, 2] = true;
+            graph[4, 6] = true;
+            graph[4, 7] = true;
+            graph[5, 2] = true;
+            graph[5, 3] = true;
+            graph[5, 6] = true;
+            graph[6, 1] = true;
+            graph[6, 4] = true;
+            graph[6, 5] = true;
+            graph[6, 7] = true;
+            graph[7, 3] = true;
+            graph[7, 4] = true;
+            graph[7, 6] = true;
+
+            // BFS 탐색
+            Console.WriteLine("<BFS>");
+            BFS(graph, 0, out bool[] visited, out int[] parents);
+            Console.WriteLine($"{"Vertex",8}{"Visited",8}{"Parent",8}");
+            for (int i = 0; i < visited.Length; i++)
+            {
+                Console.WriteLine($"{i,8}{visited[i],8}{parents[i],8}");
+            }
         }
     }
 }
